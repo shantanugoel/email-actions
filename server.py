@@ -1,12 +1,14 @@
+import asyncio
 from aiosmtpd.handlers import Message
 from aiosmtpd.controller import Controller
-import asyncio
 
+from actions import action
 
 class MessageHandler(Message):
   def handle_message(self, message):
     print(message)
-
+    action(message['From'], message['To'], message['Subject'],
+            message.get_payload())
 
 class FakeSMPTServer():
 
