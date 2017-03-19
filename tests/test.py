@@ -1,7 +1,7 @@
 from smtplib import SMTP
 
-host='localhost'
-port=8025
+host = 'localhost'
+port = 8025
 
 client = SMTP(host, port)
 client.sendmail('aperson@example.com', ['bperson@example.com'], """\

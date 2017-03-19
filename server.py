@@ -8,6 +8,7 @@ import constants
 
 from actions import action
 
+
 def bind(family, type, proto):
   """Create (or recreate) the actual socket object."""
   sock = socket.socket(family, type, proto)
@@ -18,6 +19,7 @@ def bind(family, type, proto):
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, False)
 
   return sock
+
 
 class EAController(Controller):
   def make_socket(self):
@@ -47,11 +49,13 @@ class EAController(Controller):
     sock = bind(family, type, proto)
     return sock
 
+
 class MessageHandler(Message):
   def handle_message(self, message):
     print(message)
     action(message['From'], message['To'], message['Subject'],
-            message.get_payload())
+           message.get_payload())
+
 
 class EASMPTServer():
 
@@ -65,12 +69,13 @@ class EASMPTServer():
   @asyncio.coroutine
   def serve(self, loop):
     controller = EAController(MessageHandler(), hostname=self.host,
-                            port=self.port)
+                              port=self.port)
     controller.start()
 
   @asyncio.coroutine
   def stop(self):
     Controller.stop()
+
 
 def main():
   parser = argparse.ArgumentParser(prog='email-actions')
@@ -96,6 +101,7 @@ def main():
   except KeyboardInterrupt:
     server.stop()
     loop.stop()
+
 
 if __name__ == "__main__":
   main()
