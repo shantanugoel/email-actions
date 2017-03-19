@@ -1,5 +1,6 @@
 import asyncio
 import argparse
+import socket
 from aiosmtpd.handlers import Message
 from aiosmtpd.controller import Controller
 
@@ -7,13 +8,52 @@ import constants
 
 from actions import action
 
+def bind(family, type, proto):
+  """Create (or recreate) the actual socket object."""
+  sock = socket.socket(family, type, proto)
+  sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
+
+  # If listening on IPv6, activate dual-stack.
+  if family == socket.AF_INET6:
+    sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, False)
+
+  return sock
+
+class EAController(Controller):
+  def make_socket(self):
+    host = self.hostname
+    port = self.port
+    try:
+      # First try to determine the socket type.
+        info = socket.getaddrinfo(
+          host, port,
+          socket.AF_UNSPEC,
+          socket.SOCK_STREAM,
+          0,
+          socket.AI_PASSIVE,
+        )
+    except socket.gaierror:
+      # Infer the type from the host.
+        addr = host, port
+        if ':' in host:
+          addr += 0, 0
+          type_ = socket.AF_INET6
+        else:
+          type_ = socket.AF_INET
+          info_0 = type_, socket.SOCK_STREAM, 0, '', addr
+          info = info_0,
+
+    family, type, proto, canonname, addr = next(iter(info))
+    sock = bind(family, type, proto)
+    return sock
+
 class MessageHandler(Message):
   def handle_message(self, message):
     print(message)
     action(message['From'], message['To'], message['Subject'],
             message.get_payload())
 
-class FakeSMPTServer():
+class EASMPTServer():
 
   host = 'localhost'
   port = 8025
@@ -24,7 +64,7 @@ class FakeSMPTServer():
 
   @asyncio.coroutine
   def serve(self, loop):
-    controller = Controller(MessageHandler(), hostname=self.host,
+    controller = EAController(MessageHandler(), hostname=self.host,
                             port=self.port)
     controller.start()
 
@@ -33,7 +73,7 @@ class FakeSMPTServer():
     Controller.stop()
 
 def main():
-  parser = argparse.ArgumentParser(prog='fake-email-actions')
+  parser = argparse.ArgumentParser(prog='email-actions')
   parser.add_argument('-v', '--version', action='version',
                       version='%(prog)s version ' + constants.VERSION)
   parser.add_argument('-H', '--hostname', action='store',
@@ -48,7 +88,7 @@ def main():
                       help='Specify config file')
   args = parser.parse_args()
 
-  server = FakeSMPTServer(args.hostname, args.port)
+  server = EASMPTServer(args.hostname, args.port)
   loop = asyncio.get_event_loop()
   loop.create_task(server.serve(loop))
   try:
