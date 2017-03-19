@@ -84,8 +84,8 @@ def main():
                       default=8025)
   req_args = parser.add_argument_group('required arguments')
   req_args.add_argument('-c', '--config', required=True,
-                      type=argparse.FileType('r', encoding='UTF-8'),
-                      help='Specify config file')
+                        type=argparse.FileType('r', encoding='UTF-8'),
+                        help='Specify config file')
   args = parser.parse_args()
 
   server = EASMPTServer(args.hostname, args.port)
