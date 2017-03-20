@@ -8,6 +8,7 @@ from aiosmtpd.controller import Controller
 import constants
 
 from actions import action
+from config import check_config
 
 
 def bind(family, type, proto):
@@ -95,8 +96,8 @@ def main():
                       default=0)
   req_args = parser.add_argument_group('required arguments')
   req_args.add_argument('-c', '--config', required=True,
-                        type=argparse.FileType('r', encoding='UTF-8'),
-                        help='Specify config file')
+                        help='Specify config file to be used. If it '
+                        'doesn\'t exist, we\'ll try to create it')
   args = parser.parse_args()
 
   if args.log >= 2:
@@ -108,6 +109,11 @@ def main():
   logging.basicConfig(level=log_level,
                       format='%(asctime)s: [EA] %(filename)s '
                       '- %(message)s')
+
+  cfg_status = check_config(args.config)
+
+  if not cfg_status:
+    exit(1)
 
   server = EASMPTServer(args.hostname, args.port)
   loop = asyncio.get_event_loop()
