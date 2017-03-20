@@ -1,4 +1,5 @@
 import requests
+import logging
 
 from config import JOIN_API_KEY
 
@@ -12,5 +13,5 @@ def join_notify(msg_from, msg_to, msg_subject, msg_content):
     'text': msg_content,
     'apikey': JOIN_API_KEY
   }
-  print("Sending notification")
+  logging.debug("Sending notification to %s" % (params['deviceId']))
   requests.get(BASE_URL, params=params)

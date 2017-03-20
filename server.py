@@ -1,3 +1,4 @@
+import logging
 import asyncio
 import argparse
 import socket
@@ -52,7 +53,7 @@ class EAController(Controller):
 
 class MessageHandler(Message):
   def handle_message(self, message):
-    print(message)
+    logging.debug(message)
     action(message['From'], message['To'], message['Subject'],
            message.get_payload())
 
@@ -65,6 +66,8 @@ class EASMPTServer():
   def __init__(self, host, port):
     self.host = host
     self.port = port
+    logging.debug("Using host: %s and port %d for smtp server"
+                  % (host, port))
 
   @asyncio.coroutine
   def serve(self, loop):
@@ -87,18 +90,33 @@ def main():
   parser.add_argument('-p', '--port', type=int, action='store',
                       help='Port number to bind the server to',
                       default=8025)
+  parser.add_argument('-l', '--log', type=int, action='store',
+                      help='Set log level. 0=> Warning, 1=>Info, 2=>Debug',
+                      default=0)
   req_args = parser.add_argument_group('required arguments')
   req_args.add_argument('-c', '--config', required=True,
                         type=argparse.FileType('r', encoding='UTF-8'),
                         help='Specify config file')
   args = parser.parse_args()
 
+  if args.log >= 2:
+    log_level = logging.DEBUG
+  elif args.log == 1:
+    log_level = logging.INFO
+  else:
+    log_level = logging.WARNING
+  logging.basicConfig(level=log_level,
+                      format='%(asctime)s: [EA] %(filename)s '
+                      '- %(message)s')
+
   server = EASMPTServer(args.hostname, args.port)
   loop = asyncio.get_event_loop()
   loop.create_task(server.serve(loop))
   try:
+    logging.info("Starting server")
     loop.run_forever()
   except KeyboardInterrupt:
+    logging.info("Stopping server")
     server.stop()
     loop.stop()
 
