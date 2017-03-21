@@ -7,7 +7,7 @@ from aiosmtpd.controller import Controller
 
 import constants
 
-from actions import action
+from filters import filter
 from config import check_config
 
 
@@ -55,7 +55,7 @@ class EAController(Controller):
 class MessageHandler(Message):
   def handle_message(self, message):
     logging.debug(message)
-    action(message['From'], message['To'], message['Subject'],
+    filter(message['From'], message['To'], message['Subject'],
            message.get_payload())
 
 
@@ -96,8 +96,8 @@ def main():
                       default=0)
   req_args = parser.add_argument_group('required arguments')
   req_args.add_argument('-c', '--config', required=True,
-                        help='Specify config file to be used. If it '
-                        'doesn\'t exist, we\'ll try to create it')
+                        help='Specify config file (yaml format) to be used. '
+                        'If it doesn\'t exist, we\'ll try to create it')
   args = parser.parse_args()
 
   if args.log >= 2:
