@@ -24,7 +24,8 @@ cfg = {
 def create_config(path):
   try:
     with open(path, "w") as config_file:
-      yaml.dump(cfg, stream=config_file, default_flow_style=False, encoding='utf-8')
+      yaml.dump(cfg, stream=config_file, default_flow_style=False,
+                encoding='utf-8')
   except IOError as e:
     logging.critical('Error while writing config_file %s: %s'
                      % (path, str(e)))
@@ -52,7 +53,7 @@ def check_config(path):
                        % (path, str(e)))
       logging.critical('Check the config file path and try again')
       return False
-    if not cfg or not 'filters' in cfg or not cfg['filters']:
+    if not cfg or 'filters' not in cfg or not cfg['filters']:
       logging.critical('Empty or malformed config_file %s' % (path))
       logging.critical('Check the config file path and try again')
       return False
@@ -61,7 +62,8 @@ def check_config(path):
 
 def read_config_plugin(filter_name, plugin_name):
   temp_cfg = {}
-  if 'global' in cfg and plugin_name in cfg['global'] and cfg['global'][plugin_name]:
+  if 'global' in cfg and plugin_name in cfg['global'] and \
+     cfg['global'][plugin_name]:
     temp_cfg = cfg['global'][plugin_name]
   try:
     for key in cfg['filters'][filter_name]['actions'][plugin_name].keys():

@@ -24,6 +24,7 @@ def join_notify(filter_name, msg_from, msg_to, msg_subject, msg_content):
     r.raise_for_status()
     response = r.json()
     if not response['success']:
-      logging.error("Error while sending notification: %s" % (response['errorMessage']))
+      logging.error("Error while sending notification: %s" %
+                    (response['errorMessage']))
   except requests.exceptions.RequestException as e:
     logging.error("Error while sending notification: %s" % (e))
