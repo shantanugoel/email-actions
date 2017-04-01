@@ -2,7 +2,7 @@ import logging
 
 
 from config import get_filter_list, get_filter_rules, get_actions_list
-from join import join_notify
+from plugins.join import join_notify
 
 
 class Filter():
