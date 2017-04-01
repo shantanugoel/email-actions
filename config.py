@@ -72,3 +72,33 @@ def read_config_plugin(filter_name, plugin_name):
     # No specific options specified for this plugin in this action
     pass
   return temp_cfg
+
+
+def get_filter_list():
+  filter_list = []
+  for key in cfg['filters'].keys():
+    filter_list.append(key)
+  return filter_list
+
+
+def get_filter_rules(filter_name):
+  rules = {}
+  try:
+    rules = cfg['filters'][filter_name]['rules']
+  except:
+    pass
+  return rules
+
+
+def get_actions_list(filter_name):
+  actions_list = []
+  try:
+    # Actions may be keys (if options are given) or a list
+    for action in cfg['filters'][filter_name]['actions']:
+      if type(action) is dict:
+        actions_list.append(action.key)
+      else:
+        actions_list.append(action)
+  except:
+    pass
+  return actions_list

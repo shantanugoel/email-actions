@@ -7,7 +7,7 @@ from aiosmtpd.controller import Controller
 
 import constants
 
-from filters import filter
+from filters import Filter
 from config import check_config
 
 
@@ -53,10 +53,16 @@ class EAController(Controller):
 
 
 class MessageHandler(Message):
+  filter_obj = None
+
+  def __init__(self, message_class=None):
+    super().__init__(message_class)
+    self.filter_obj = Filter()
+
   def handle_message(self, message):
     logging.debug(message)
-    filter(message['From'], message['To'], message['Subject'],
-           message.get_payload())
+    self.filter_obj.filter(message['From'], message['To'], message['Subject'],
+                           message.get_payload())
 
 
 class EASMPTServer():
