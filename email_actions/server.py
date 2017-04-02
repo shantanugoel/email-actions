@@ -108,7 +108,10 @@ def main():
   req_args.add_argument('-c', '--config', required=True,
                         help='Specify config file (yaml format) to be used. '
                         'If it doesn\'t exist, we\'ll try to create it')
-  args = parser.parse_args()
+  try:
+    args = parser.parse_args()
+  except:
+    exit(1)
 
   if args.log >= 2:
     log_level = logging.DEBUG
