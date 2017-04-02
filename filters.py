@@ -2,22 +2,20 @@ import logging
 
 
 from config import get_filter_list, get_filter_rules, get_actions_list
-from plugins.join import join_notify
-from plugins.email import email_notify
-from plugins.exec import exec_notify
+from plugins import entry_funcs
 
 
 class Filter():
 
   filters_list = []
-  actions = {
-    'join': join_notify,
-    'email': email_notify,
-    'exec': exec_notify,
-  }
+  actions = {}
 
   def __init__(self):
     self.filters_list = get_filter_list()
+    self._generate_actions_list()
+
+  def _generate_actions_list(self):
+    self.actions = entry_funcs
 
   '''
   Match the given input to the rules specified in config. It returns True
