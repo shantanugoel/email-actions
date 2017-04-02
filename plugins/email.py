@@ -13,20 +13,23 @@ def email_notify(filter_name, msg_from, msg_to, msg_subject, msg_content):
   plugin_cfg = read_config_plugin(filter_name, PLUGIN_NAME)
   params = {
     'host': None,
-    'port': None,
+    'port': 25,
     'username': None,
     'password': None,
+    'secure': False
   }
   for key in plugin_cfg.keys():
     params[key] = plugin_cfg[key]
 
-  if not params['host'] or not params['port']:
-    logging.error('Missing mandatory host/port config for email')
+  if not params['host']:
+    logging.error('Missing mandatory host config for email')
     return
 
   client = SMTP(params['host'], params['port'])
   send_mail = True
   if params['username'] and ['password']:
+    if params['secure']:
+      client.starttls()
     try:
       client.login(params['username'], params['password'])
     except (SMTPHeloError, SMTPAuthenticationError, SMTPNotSupportedError,
