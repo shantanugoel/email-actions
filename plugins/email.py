@@ -1,6 +1,8 @@
 import logging
 
-from smtplib import SMTP
+from smtplib import SMTP, SMTPHeloError, SMTPAuthenticationError, \
+  SMTPNotSupportedError, SMTPException, SMTPRecipientsRefused,\
+  SMTPSenderRefused, SMTPDataError
 
 from config import read_config_plugin
 
@@ -27,14 +29,17 @@ def email_notify(filter_name, msg_from, msg_to, msg_subject, msg_content):
   if params['username'] and ['password']:
     try:
       client.login(params['username'], params['password'])
-    # TODO: Better Error Handling and logging returned error
-    except:
+    except (SMTPHeloError, SMTPAuthenticationError, SMTPNotSupportedError,
+            SMTPException) as e:
       send_mail = False
-      logging.error('Error logging in to given SMTP server')
+      logging.error('Error logging in to SMTP server: %s' % (e))
 
   if send_mail:
-    # TODO: Error Handling
     # TODO: Form message properly
-    client.sendmail(msg_from, msg_to, msg_content)
+    try:
+      client.sendmail(msg_from, msg_to, msg_content)
+    except (SMTPHeloError, SMTPNotSupportedError, SMTPRecipientsRefused,
+            SMTPSenderRefused, SMTPDataError) as e:
+      logging.error('Error sending email: %s' % (e))
 
   client.quit()
