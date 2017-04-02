@@ -23,6 +23,7 @@ setup(
   description='An SMTP server with a rules based engine to trigger \
   any actions (notifications/commands etc) based on the emails sent to \
   this server',
+  long_description=long_description,
   entry_points={
     'console_scripts': [
       'email_actions=email_actions.server:main',
