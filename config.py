@@ -67,7 +67,7 @@ def read_config_plugin(filter_name, plugin_name):
     temp_cfg = cfg['global'][plugin_name]
   try:
     for key in cfg['filters'][filter_name]['actions'][plugin_name].keys():
-      temp_cfg[key] = cfg['filters'][filter_name]['actions'][key]
+      temp_cfg[key] = cfg['filters'][filter_name]['actions'][plugin_name][key]
   except:
     # No specific options specified for this plugin in this action
     pass
