@@ -6,10 +6,9 @@ from aiosmtpd.handlers import Message
 from aiosmtpd.controller import Controller
 from functools import partial
 
-import constants
-
-from filters import Filter
-from config import check_config
+from email_actions.constants import VERSION
+from email_actions.filters import Filter
+from email_actions.config import check_config
 
 
 def bind(family, type, proto):
@@ -95,7 +94,7 @@ class EASMPTServer():
 def main():
   parser = argparse.ArgumentParser(prog='email-actions')
   parser.add_argument('-v', '--version', action='version',
-                      version='%(prog)s version ' + constants.VERSION)
+                      version='%(prog)s version ' + VERSION)
   parser.add_argument('-H', '--hostname', action='store',
                       help='Host IP or name to bind the server to',
                       default='localhost')

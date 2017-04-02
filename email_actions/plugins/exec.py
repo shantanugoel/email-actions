@@ -1,7 +1,7 @@
 from subprocess import Popen
 import logging
 
-from config import read_config_plugin
+from email_actions.config import read_config_plugin
 
 PLUGIN_NAME = 'exec'
 

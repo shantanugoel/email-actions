@@ -1,7 +1,7 @@
 import requests
 import logging
 
-from config import read_config_plugin
+from email_actions.config import read_config_plugin
 
 PLUGIN_NAME = 'join'
 BASE_URL = 'https://joinjoaomgcd.appspot.com/_ah/api/messaging/v1/sendPush?'

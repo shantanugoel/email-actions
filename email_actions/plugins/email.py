@@ -4,7 +4,7 @@ from smtplib import SMTP, SMTPHeloError, SMTPAuthenticationError, \
   SMTPNotSupportedError, SMTPException, SMTPRecipientsRefused,\
   SMTPSenderRefused, SMTPDataError
 
-from config import read_config_plugin
+from email_actions.config import read_config_plugin
 
 PLUGIN_NAME = 'email'
 

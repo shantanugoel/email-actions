@@ -1,8 +1,9 @@
 import logging
 
 
-from config import get_filter_list, get_filter_rules, get_actions_list
-from plugins import entry_funcs
+from email_actions.config import get_filter_list, get_filter_rules,\
+  get_actions_list
+from email_actions.plugins import entry_funcs
 
 
 class Filter():
