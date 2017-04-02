@@ -5,7 +5,6 @@ import socket
 from aiosmtpd.handlers import Message
 from aiosmtpd.controller import Controller
 from functools import partial
-from concurrent.futures import ProcessPoolExecutor
 
 import constants
 
