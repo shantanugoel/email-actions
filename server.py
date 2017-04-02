@@ -4,6 +4,8 @@ import argparse
 import socket
 from aiosmtpd.handlers import Message
 from aiosmtpd.controller import Controller
+from functools import partial
+from concurrent.futures import ProcessPoolExecutor
 
 import constants
 
@@ -61,8 +63,12 @@ class MessageHandler(Message):
 
   def handle_message(self, message):
     logging.debug(message)
-    self.filter_obj.filter(message['From'], message['To'], message['Subject'],
-                           message.get_payload())
+    loop = asyncio.get_event_loop()
+    filter_action = partial(
+      self.filter_obj.filter, message['From'], message['To'],
+      message['Subject'], message.get_payload()
+    )
+    loop.run_in_executor(None, filter_action)
 
 
 class EASMPTServer():
