@@ -4,6 +4,7 @@ import logging
 from config import get_filter_list, get_filter_rules, get_actions_list
 from plugins.join import join_notify
 from plugins.email import email_notify
+from plugins.exec import exec_notify
 
 
 class Filter():
@@ -12,6 +13,7 @@ class Filter():
   actions = {
     'join': join_notify,
     'email': email_notify,
+    'exec': exec_notify,
   }
 
   def __init__(self):

@@ -21,8 +21,12 @@ def exec_notify(filter_name, msg_from, msg_to, msg_subject, msg_content):
   plugin_cfg = read_config_plugin(filter_name, PLUGIN_NAME)
   for key in plugin_cfg.keys():
     if key == 'env':
-      for env_key in plugin_cfg[key].keys():
-        params[key][env_key] = plugin_cfg[key][env_key]
+      try:
+        for env_key in plugin_cfg[key].keys():
+            params[key][env_key] = plugin_cfg[key][env_key]
+      except:
+        # Ignore stray env element in config without any actual env param
+        pass
     else:
       params[key] = plugin_cfg[key]
 
@@ -30,4 +34,7 @@ def exec_notify(filter_name, msg_from, msg_to, msg_subject, msg_content):
     logging.error('No command specified for plugin %s' % (PLUGIN_NAME))
     return
 
-  Popen([params['cmd'], params['args']], env=params['env'])
+  popen_args = [params['cmd']]
+  for arg in params['args']:
+    popen_args.append(arg)
+  Popen(popen_args, env=params['env'])
