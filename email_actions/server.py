@@ -92,7 +92,7 @@ class EASMPTServer():
 
 
 def main():
-  parser = argparse.ArgumentParser(prog='email-actions')
+  parser = argparse.ArgumentParser(prog='email_actions')
   parser.add_argument('-v', '--version', action='version',
                       version='%(prog)s version ' + VERSION)
   parser.add_argument('-H', '--hostname', action='store',

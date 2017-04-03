@@ -1,3 +1,15 @@
+# Table Of Contents
+
+- [email-actions](#email-actions)
+- [Why did you make email-actions](#why-did-you-make-email-actions)
+- [What are the benefits/differences compared to hosted services like IFTTT](#what-are-the-benefits-differences-compared-to-hosted-services-like-ifttt)
+- [Current high level feature list](#current-high-level-feature-list)
+- [Installation](#installation)
+- [Usage](#usage)
+  * [Config file format / Plugin settings](#config-file-format---plugin-settings)
+- [Contributing](#contributing)
+  * [How to write a plugin](#how-to-write-a-plugin)
+  
 # email-actions
 email-actions is a tiny SMTP server with a rules based engine to trigger any actions (notifications/commands etc) based on the emails sent to this server.
 Think of it like [IFTTT](https://ifttt.com) but where input trigger is email and can be set up and run locally as well.
@@ -48,6 +60,28 @@ python setup.py install
 ```
 
 # Usage
+
+```
+usage: email_actions [-h] [-v] [-H HOSTNAME] [-p PORT] [-l LOG] -c CONFIG
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+  -H HOSTNAME, --hostname HOSTNAME
+                        Host IP or name to bind the server to
+  -p PORT, --port PORT  Port number to bind the server to
+  -l LOG, --log LOG     Set log level. 0=> Warning, 1=>Info, 2=>Debug
+
+required arguments:
+  -c CONFIG, --config CONFIG
+                        Specify config file (yaml format) to be used. If it
+                        doesn't exist, we'll try to create it
+
+```
+
+Most of the options above are self explanatory. If you don't specify a hostname, it will choose `localhost` by default. If you don't specify a port, it'll choose `8025` by default. 
+
+Specifying a config file is mandatory. If the specified file doesn't exist, we'll generate a dummy one which you can fill. But essentially this is a step that you can't avoid. The config file is explained in more detail below.
 
 ## Config file format / Plugin settings
 
