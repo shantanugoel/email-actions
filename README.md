@@ -6,7 +6,9 @@
 - [Current high level feature list](#current-high-level-feature-list)
 - [Installation](#installation)
 - [Usage](#usage)
-  * [Config file format / Plugin settings](#config-file-format---plugin-settings)
+  * [Config file format](#config-file-format)
+  * [Rules](#rules)
+  * [Plugin settings](#plugin-settings)
 - [Contributing](#contributing)
   * [How to write a plugin](#how-to-write-a-plugin)
   
@@ -102,7 +104,10 @@ email-actions works on the basis of user specified `filters`. Each filter can ha
 At least 1 filter is necessary in the configuration. Each filter must have at least 1 action. Rest all is optional. Each action plugin may have it's own mandatory OR optional settings. See [Plugin Settings](#plugin-settings) for all available plugins and their options/variables
 
 The config file has the following general format. All text after `#` is an explanation, not a part of the config itself.
+
 Names within `<>` can be substituted by user as per their choice. Names outside `<>` are reserved by email-actions and must be used as is.
+
+All settings are case-sensitive. So take care of that.
 
 ```
 global:  # Optional keyword that specifies global variables for plugins. These are available in all instances of your plugins in each filter
@@ -167,6 +172,36 @@ Currently, below rules are supported. These can be specified under a `rules` blo
 
 
 ## Plugin Settings
+
+### join
+
+This plugin sends a push notification to your devices using the [Join](https://joaoapps.com/join/) app
+
+Options:
+
+| Option Keyword | Mandatory / Optional | Default Value | Comment |
+|----------------|----------------------|---------------|---------|
+|apikey|Mandatory|None|Your API key from [here](https://joinjoaomgcd.appspot.com/) |
+|deviceId|Optional|group.all|See valid options [here](https://joaoapps.com/join/api/) |
+|title|Optional |Email Subject|See valid options [here](https://joaoapps.com/join/api/) |
+|text|Optional|Email content|See valid options [here](https://joaoapps.com/join/api/) |
+
+### exec
+
+| Option Keyword | Mandatory / Optional | Default Value | Comment |
+|----------------|----------------------|---------------|---------|
+|||||
+
+### email
+
+| Option Keyword | Mandatory / Optional | Default Value | Comment |
+|----------------|----------------------|---------------|---------|
+|host|Mandatory |None |Provide hostname or ip of your upstream smtp server |
+|port|Optional|25|Port for upstream smtp server |
+|username|Optional |None|username if required|
+|password|Optional |None|Password if required|
+|secure|Optional|False|Set it to true if upstream server requires secure/TLS connection|
+
 # Contributing
 Feel free to fork the repo and send PRs for any changes. If you can't make changes but want to report issues or provide feedback, open an Issue on github or ping me on twitter [@shantanugoel](https://twitter.com/shantanugoel)
 
