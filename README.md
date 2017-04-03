@@ -161,9 +161,9 @@ filters:
 ## Rules
 Currently, below rules are supported. These can be specified under a `rules` block.
 
-|Rule Keyword| Value |
-|---+---|
-|to | Any email id which should exactly match the "To" field in the incoming email |
+| Rule Keyword | Value |
+|---|---|
+| to | Any email id which should exactly match the "To" field in the incoming email |
 
 
 ## Plugin Settings
