@@ -13,11 +13,12 @@ Since then, I've started using it for many other things as email is pervasive an
 
 # What are the benefits/differences compared to hosted services like IFTTT
 IFTTT provides email hooks as well. I *think* email-actions may be an alternative (you can decide whether it's better or not) with respect to below:
+- IFTTT works as a client once email is received so you still need an available SMTP server to be able to send email. This can be expensive or risky as you'd have to share your server username/pwd to the email sending entity. email-actions is an SMTP server that takes actions before any actual email delivery.
 - Can be run locally with minimal dependencies. You don't need to send your data to internet or even have an internet connection
 - Tiny footprint
 - Can run local commands as well while IFTTT still needs to be integrated with something else if that's what you need
 - You are in control of your info
-- Free(er). That is no limitations on hooks/conditions etc
+- Free(er), that is, no limitations on hooks/conditions etc
 
 # Current high level feature list
 - aiosmtpd based for aync email processing for performance
