@@ -57,10 +57,10 @@ Feel free to fork the repo and send PRs for any changes. If you can't make chang
 You can contribute either to the core or write a plugin for your usecase. The only guiding principle is to keep it as simple/minimal as possible.
 
 ## How to write a plugin
-Take a look at any plugin in [plugins](https://github.com/shantanugoel/email-actions/email_actions/plugins) directory
+Take a look at any plugin in [plugins](https://github.com/shantanugoel/email-actions/tree/master/email_actions/plugins) directory
 A minimal plugin needs to do following things:
 - Define 'PLUGIN_NAME'. This need not be same as the file name but is preferred to keep that way
 - A function that takes these parameters: `filter_name, msg_from, msg_to, msg_subject, msg_content` and doesn't return anything
 - Read plugin's configuration (if any) using email_actions.config.read_config_plugin function
   - Ideally the plugin should not need to use any other function from the core
-- After writing the plugin, add the plugin's name and entry function in `entry_funcs` dict in [plugins init file](https://github.com/shantanugoel/email-actions/email_actions/plugins/__init__.py)
+- After writing the plugin, add the plugin's name and entry function in `entry_funcs` dict in [plugins init file](https://github.com/shantanugoel/email-actions/tree/master/email_actions/plugins/__init__.py)
