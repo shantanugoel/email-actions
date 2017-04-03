@@ -26,9 +26,9 @@ IFTTT provides email hooks as well. I *think* email-actions may be an alternativ
 - Global or local variables for full customization/reuse
 - Action decision based on "To" email address filtering (Addition of many other filters on the roadmap)
 - Plugins supported:
- -- [Join](https://joaoapps.com/join/) push notifications (Will add pushbullet if there's a demand or can use custom external script for now)
- -- Custom Local commands (Any arguments, any script type, custom environment variables)
- -- Email (Can forward the email to custom upstream servers further if needed for more actions or actual email delivery)
+  - [Join](https://joaoapps.com/join/) push notifications (Will add pushbullet if there's a demand or can use custom external script for now)
+  - Custom Local commands (Any arguments, any script type, custom environment variables)
+  - Email (Can forward the email to custom upstream servers further if needed for more actions or actual email delivery)
 
 # Installation
 
@@ -61,5 +61,5 @@ A minimal plugin needs to do following things:
 - Define 'PLUGIN_NAME'. This need not be same as the file name but is preferred to keep that way
 - A function that takes these parameters: `filter_name, msg_from, msg_to, msg_subject, msg_content` and doesn't return anything
 - Read plugin's configuration (if any) using email_actions.config.read_config_plugin function
- -- Ideally the plugin should not need to use any other function from the core
+  - Ideally the plugin should not need to use any other function from the core
 - After writing the plugin, add the plugin's name and entry function in `entry_funcs` dict in [plugins init file](https://github.com/shantanugoel/email-actions/email_actions/plugins/__init__.py)
