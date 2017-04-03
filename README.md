@@ -166,9 +166,9 @@ filters:
 ## Rules
 Currently, below rules are supported. These can be specified under a `rules` block.
 
-| Rule Keyword | Value |
-|---|---|
-| to | Any email id which should exactly match the "To" field in the incoming email |
+| Rule Keyword | Value                                                                        |
+|--------------+------------------------------------------------------------------------------|
+| to           | Any email id which should exactly match the "To" field in the incoming email |
 
 
 ## Plugin Settings
@@ -179,34 +179,34 @@ This plugin sends a push notification to your devices using the [Join](https://j
 
 Options:
 
-| Option Keyword | Mandatory / Optional | Default Value | Comment |
-|----------------|----------------------|---------------|---------|
-|apikey|Mandatory|None|Your API key from [here](https://joinjoaomgcd.appspot.com/) |
-|deviceId|Optional|group.all|See valid options [here](https://joaoapps.com/join/api/) |
-|title|Optional |Email Subject|See valid options [here](https://joaoapps.com/join/api/) |
-|text|Optional|Email content|See valid options [here](https://joaoapps.com/join/api/) |
+| Option Keyword | Mandatory / Optional | Default Value | Comment                                                     |
+|----------------+----------------------+---------------+-------------------------------------------------------------|
+| apikey         | Mandatory            | None          | Your API key from [here](https://joinjoaomgcd.appspot.com/) |
+| deviceId       | Optional             | group.all     | See valid options [here](https://joaoapps.com/join/api/)    |
+| title          | Optional             | Email Subject | See valid options [here](https://joaoapps.com/join/api/)    |
+| text           | Optional             | Email content | See valid options [here](https://joaoapps.com/join/api/)    |
 
 ### exec
 
 This plugin allows to run any arbitrary command or script on your local system on which email-actions server is running.
 
-| Option Keyword | Mandatory / Optional | Default Value | Comment |
-|----------------|----------------------|---------------|---------|
-|cmd|Mandatory|None|Full path to the command to be run. Don't include arguments. Enclose in quotes if space in path |
-|args|Optional|Empty list |List of arguments to be passed to command, 1 on each line. |
-|env|Optional|Empty dictionary|Key value pair of custom environment variables for the external command/script. One on each line|
+| Option Keyword | Mandatory / Optional | Default Value    | Comment                                                                                          |
+|----------------+----------------------+------------------+--------------------------------------------------------------------------------------------------|
+| cmd            | Mandatory            | None             | Full path to the command to be run. Don't include arguments. Enclose in quotes if space in path  |
+| args           | Optional             | Empty list       | List of arguments to be passed to command, 1 on each line.                                       |
+| env            | Optional             | Empty dictionary | Key value pair of custom environment variables for the external command/script. One on each line |
 
 ### email
 
 This plugin allows to forward the incoming email further to an upstream smtp server
 
-| Option Keyword | Mandatory / Optional | Default Value | Comment |
-|----------------|----------------------|---------------|---------|
-|host|Mandatory |None |Provide hostname or ip of your upstream smtp server |
-|port|Optional|25|Port for upstream smtp server |
-|username|Optional |None|username if required|
-|password|Optional |None|Password if required|
-|secure|Optional|False|Set it to true if upstream server requires secure/TLS connection|
+| Option Keyword | Mandatory / Optional | Default Value | Comment                                                          |
+|----------------+----------------------+---------------+------------------------------------------------------------------|
+| host           | Mandatory            | None          | Provide hostname or ip of your upstream smtp server              |
+| port           | Optional             | 25            | Port for upstream smtp server                                    |
+| username       | Optional             | None          | username if required                                             |
+| password       | Optional             | None          | Password if required                                             |
+| secure         | Optional             | False         | Set it to true if upstream server requires secure/TLS connection |
 
 # Contributing
 Feel free to fork the repo and send PRs for any changes. If you can't make changes but want to report issues or provide feedback, open an Issue on github or ping me on twitter [@shantanugoel](https://twitter.com/shantanugoel)
