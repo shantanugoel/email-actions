@@ -79,7 +79,17 @@ required arguments:
 
 ```
 
+Examples:
+```
+email_actions -H 127.0.0.1 -p 8500 -l 2 -c /home/shantanu/email_actions_cfg.yml
+```
+```
+email_actions -c /home/shantanu/email_actions_cfg.yml
+```
+
 Most of the options above are self explanatory. If you don't specify a hostname, it will choose `localhost` by default. If you don't specify a port, it'll choose `8025` by default. 
+
+**Note** I recommend running the server on localhost or an internal network interface so that it can't be abused from internet. Right now it doesn't support authentication (limitation of aiosmtpd. Will be fixed soon), so if you must open it up to the internet, add your own scheme of verification either through a randomly generated email address in "To" rule or some other check in subject/content in your own external script that you are triggering.
 
 Specifying a config file is mandatory. If the specified file doesn't exist, we'll generate a dummy one which you can fill. But essentially this is a step that you can't avoid. The config file is explained in more detail below.
 
