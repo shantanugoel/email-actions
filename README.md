@@ -188,11 +188,17 @@ Options:
 
 ### exec
 
+This plugin allows to run any arbitrary command or script on your local system on which email-actions server is running.
+
 | Option Keyword | Mandatory / Optional | Default Value | Comment |
 |----------------|----------------------|---------------|---------|
-|||||
+|cmd|Mandatory|None|Full path to the command to be run. Don't include arguments. Enclose in quotes if space in path |
+|args|Optional|Empty list |List of arguments to be passed to command, 1 on each line. |
+|env|Optional|Empty dictionary|Key value pair of custom environment variables for the external command/script. One on each line|
 
 ### email
+
+This plugin allows to forward the incoming email further to an upstream smtp server
 
 | Option Keyword | Mandatory / Optional | Default Value | Comment |
 |----------------|----------------------|---------------|---------|
