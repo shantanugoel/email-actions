@@ -93,8 +93,80 @@ Most of the options above are self explanatory. If you don't specify a hostname,
 
 Specifying a config file is mandatory. If the specified file doesn't exist, we'll generate a dummy one which you can fill. But essentially this is a step that you can't avoid. The config file is explained in more detail below.
 
-## Config file format / Plugin settings
+## Config file format
 
+email-actions uses the simple `yaml` format for its configuration. Learning this is a small task (few minutes at most for the basic usage that we need). You can look at [this page](https://learn.getgrav.org/advanced/yaml) for a quick reference.
+
+email-actions works on the basis of user specified `filters`. Each filter can have `rules` specified which decide whether to run an action or not on the incoming email. Each filter also specifies `actions` (which is 1 or more plugins) to run an action on the incoming email if it passes the `rules`.
+
+At least 1 filter is necessary in the configuration. Each filter must have at least 1 action. Rest all is optional. Each action plugin may have it's own mandatory OR optional settings. See [Plugin Settings](#plugin-settings) for all available plugins and their options/variables
+
+The config file has the following general format. All text after `#` is an explanation, not a part of the config itself.
+Names within `<>` can be substituted by user as per their choice. Names outside `<>` are reserved by email-actions and must be used as is.
+
+```
+global:  # Optional keyword that specifies global variables for plugins. These are available in all instances of your plugins in each filter
+  <plugin_name>:  # Plugin name for which you are specifying a global variable
+    <setting_1>: <abcd> # Variable/setting for this plugin.
+    <setting_2>: <efgh> # Variable/setting for this plugin.
+
+filters: #Mandatory keyword to signify start of your filters specifications.
+  <filter_name>: # User specified name for a filter
+    rules:       # Rules specifications start
+      to: <email_id> # A rule that matches
+```
+
+Example: Take a look at the below sample config (Also found in [this location](https://github.com/shantanugoel/email-actions/blob/master/sample/config.yml)) 
+
+```
+# Specify a global variable for join plugin's api key
+global:
+  join:
+    apikey: my_join_app_api_key
+
+# Specify 2 filters.
+# my_filter matches only the emails which are sent to abc@a.com and runs below 2 actions:
+## Send join push notification using the global join api key
+## Send an email using the credentials specified
+# my_second_filter runs on all emails since there is no rule specified
+# It runs below 2 actions:
+## Send join notification using another_api_key. Local variable overrides the global one
+## Run external command with given args and also sets up a environment variable called "MY_ENV_VAR" which can be accessed in external command
+
+filters:
+  my_filter:
+    rules:
+      to: abc@a.com
+    actions:
+      join:
+      email:
+        host: smtp.example.com
+        username: my_email_username
+        password: my_email_password
+        port: 587
+        secure: True
+  my_second_filter:
+      join:
+        apikey: another_api_key
+      exec:
+        cmd: /home/shantanu/test.sh
+        args:
+          - /home/shantanu/abc_file
+          - another_arg
+        env:
+          MY_ENV_VAR: 'Some Value'
+
+```
+
+## Rules
+Currently, below rules are supported. These can be specified under a `rules` block.
+
+|Rule Keyword| Value |
+|---+---|
+|to | Any email id which should exactly match the "To" field in the incoming email |
+
+
+## Plugin Settings
 # Contributing
 Feel free to fork the repo and send PRs for any changes. If you can't make changes but want to report issues or provide feedback, open an Issue on github or ping me on twitter [@shantanugoel](https://twitter.com/shantanugoel)
 

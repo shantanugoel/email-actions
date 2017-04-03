@@ -1,0 +1,23 @@
+global:
+  join:
+    apikey: my_join_app_api_key
+
+filters:
+  my_filter:
+    rules:
+      to: abc@a.com
+    actions:
+      join:
+      email:
+        host: smtp.example.com
+        username: my_email_username
+        password: my_email_password
+        port: 587
+        secure: True
+  my_second_filter:
+      exec:
+        cmd: /home/shantanu/test.sh
+        args:
+          - /home/shantanu/abc_file
+        env:
+          MY_ENV_VAR: 'Some Value'
